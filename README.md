@@ -1,16 +1,15 @@
-# henry_meds
+# Henry Meds
 
-A new Flutter project.
+## Run locally
 
-## Getting Started
+```
+flutter run
+flutter run -d Chrome
+flutter run -d "Anthony’s iPhone 15 Pro"
+```
 
-This project is a starting point for a Flutter application.
+## Unit tests
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```
+flutter test
+```
