@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:henry_meds/components/custom_button.dart';
 import 'package:henry_meds/screens/provider_portal.dart';
 
 class Home extends StatefulWidget {
@@ -39,20 +40,16 @@ class _HomeState extends State<Home> {
                 height: 75,
               ),
               const SizedBox(height: 40),
-              ElevatedButton(
+              CustomButton(
                 key: const Key('buttonProviderPortal'),
-                style: ElevatedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(40)),
                 onPressed: _onProviderPortalPressed,
-                child: const Text('Provider Portal'),
+                title: 'Provider Portal',
               ),
               const SizedBox(height: 10),
-              ElevatedButton(
+              CustomButton(
                 key: const Key('buttonClientPortal'),
-                style: ElevatedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(40)),
                 onPressed: _onClientPortalPressed,
-                child: const Text('Client Portal'),
+                title: 'Client Portal',
               ),
               const SizedBox(height: 60),
               Text(

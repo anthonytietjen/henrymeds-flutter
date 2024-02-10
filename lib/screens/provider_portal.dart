@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:henry_meds/components/custom_button.dart';
 import 'package:henry_meds/utils/date_utils.dart';
 import 'package:henry_meds/models/availability.dart';
 
@@ -73,17 +74,10 @@ class _HomeState extends State<ProviderPortal> {
             Padding(
               padding: const EdgeInsets.only(
                   top: 10, bottom: 40, left: 14, right: 14),
-              child: ElevatedButton(
+              child: CustomButton(
                 onPressed: _onAddAvailabilityPressed,
                 key: const Key('buttonAddAvailability'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-                  foregroundColor: Colors.black,
-                  minimumSize: const Size.fromHeight(40),
-                ),
-                child: const Text(
-                  'Add Availability',
-                ),
+                title: 'Add Availability',
               ),
             ),
           ],
