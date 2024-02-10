@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key, required this.title});
-
   final String title;
+
+  const Home({super.key, required this.title});
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  int _counter = 0;
+  void _onProviderPortalPressed() {
+    // TOOD: Open provider portal
+  }
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  void _onClientPortalPressed() {
+    // TOOD: Open client portal
   }
 
   @override
@@ -25,24 +25,41 @@ class _HomeState extends State<Home> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              const SizedBox(height: 60),
+              const Image(
+                image: AssetImage('assets/images/logo.png'),
+                height: 75,
+              ),
+              const SizedBox(height: 40),
+              ElevatedButton(
+                key: const Key('buttonProviderPortal'),
+                style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(40)),
+                onPressed: _onProviderPortalPressed,
+                child: const Text('Provider Portal'),
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                key: const Key('buttonClientPortal'),
+                style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(40)),
+                onPressed: _onClientPortalPressed,
+                child: const Text('Client Portal'),
+              ),
+              const SizedBox(height: 60),
+              Text(
+                'Copyright 2024 Henry Meds',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
