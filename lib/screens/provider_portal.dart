@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:henry_meds/components/custom_button.dart';
+import 'package:henry_meds/services/api.dart';
 import 'package:henry_meds/utils/date_utils.dart';
 import 'package:henry_meds/models/availability.dart';
 
@@ -11,22 +12,24 @@ class ProviderPortal extends StatefulWidget {
 }
 
 class _HomeState extends State<ProviderPortal> {
-  late List<Availability> _availabilities;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _availabilities = List.generate(
-      28,
-      (index) => Availability(
-        date: DateTime.utc(2024, 2, index + 1),
-        times: [13.0, 13.15, 13.5, 13.45],
+  void _onExistingAvailabilityPressed(DateTime date) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Under Construction'),
+        actions: [
+          TextButton(
+            child: const Text("OK"),
+            onPressed: () => Navigator.pop(context, 'OK'),
+          ),
+        ],
       ),
     );
   }
 
-  void _onAddAvailabilityPressed() {}
+  void _onAddAvailabilityPressed() {
+    // TODO: Show new scren
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,25 +52,39 @@ class _HomeState extends State<ProviderPortal> {
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: _availabilities.length,
-                itemBuilder: (context, index) {
-                  final availability = _availabilities[index];
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor:
-                          Theme.of(context).colorScheme.inversePrimary,
-                      child: Text(formatTwoLetterDay(availability.date)),
-                    ),
-                    trailing: const Icon(Icons.chevron_right),
-                    title: Text(
-                      buildDaySummary(availability.date),
-                    ),
-                    subtitle: Text(
-                      buildTimeSummary(availability.times),
-                    ),
-                    onTap: () => {},
-                  );
+              child: FutureBuilder<List<Availability>>(
+                future: getMyAvailabilities(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done &&
+                      snapshot.hasData) {
+                    return ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        Availability availability = snapshot.data![index];
+                        return ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor:
+                                Theme.of(context).colorScheme.inversePrimary,
+                            child: Text(formatTwoLetterDay(availability.date)),
+                          ),
+                          trailing: const Icon(Icons.chevron_right),
+                          title: Text(
+                            buildDaySummary(availability.date),
+                          ),
+                          subtitle: Text(
+                            buildTimeSummary(availability.times),
+                          ),
+                          onTap: () => {
+                            _onExistingAvailabilityPressed(availability.date)
+                          },
+                        );
+                      },
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
                 },
               ),
             ),
