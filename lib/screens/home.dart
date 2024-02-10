@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:henry_meds/screens/provider_portal.dart';
 
 class Home extends StatefulWidget {
   final String title;
@@ -11,7 +12,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   void _onProviderPortalPressed() {
-    // TOOD: Open provider portal
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const ProviderPortal()));
   }
 
   void _onClientPortalPressed() {
