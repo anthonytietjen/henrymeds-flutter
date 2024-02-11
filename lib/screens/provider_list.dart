@@ -50,8 +50,10 @@ class _ProviderListState extends State<ProviderList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor:
+            Colors.white, //Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Choose Provider'),
       ),
       body: FutureBuilder<List<Provider>>(
