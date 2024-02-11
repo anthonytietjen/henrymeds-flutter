@@ -31,5 +31,10 @@ void main() {
       expect(formatHourFromDouble(13.5), '1:30 PM');
       expect(formatHourFromDouble(13.75), '1:45 PM');
     });
+
+    test('combineDateWithTimeDouble', () {
+      expect(combineDateWithTimeDouble(DateTime.utc(2024, 1, 2), 13.25),
+          DateTime(2024, 1, 2, 13, 15));
+    });
   });
 }

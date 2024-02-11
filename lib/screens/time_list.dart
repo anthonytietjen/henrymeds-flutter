@@ -17,9 +17,12 @@ class TimeList extends StatefulWidget {
 class _TimeListState extends State<TimeList> {
   late List<double> _times;
 
-  Future<void> _confirmSchedule(double time) async {
+  Future<void> _confirmSchedule(double selectedTime) async {
     // TODO: Show loading indicator while reserving
-    DateTime reservationDateTime = DateTime.now();
+    DateTime reservationDateTime = combineDateWithTimeDouble(
+      widget.availability.date,
+      selectedTime,
+    );
 
     // Reserve the appointment. (It will time out in 30 minutes buy the server if not confirmed in time)
     String reservationId =
@@ -31,7 +34,7 @@ class _TimeListState extends State<TimeList> {
     }
 
     final formattedDate = formatDay(widget.availability.date);
-    final formattedTime = formatHourFromDouble(time);
+    final formattedTime = formatHourFromDouble(selectedTime);
 
     // Prompt for confirmation
     var result = await showDialog(

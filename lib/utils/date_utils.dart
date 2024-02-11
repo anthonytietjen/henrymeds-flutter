@@ -34,3 +34,18 @@ String formatTimeRanges(List<double> timeList) {
 
   return times.join(', ');
 }
+
+DateTime combineDateWithTimeDouble(DateTime date, double time) {
+  final hour = time.floor();
+  final minutes = ((time - hour) * 60).round();
+
+  DateTime dateTime = DateTime(
+    date.year,
+    date.month,
+    date.day,
+    hour,
+    minutes,
+  );
+
+  return dateTime;
+}
