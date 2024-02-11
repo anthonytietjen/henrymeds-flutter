@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:henry_meds/components/custom_button.dart';
 import 'package:henry_meds/services/api.dart';
 import 'package:henry_meds/utils/date_utils.dart';
-import 'package:henry_meds/models/availability.dart';
 
 class ProviderPortal extends StatefulWidget {
   const ProviderPortal({super.key});
