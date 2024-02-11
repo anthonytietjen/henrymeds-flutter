@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:henry_meds/models/availability.dart';
 import 'package:henry_meds/models/provider.dart';
+import 'package:henry_meds/screens/time_list.dart';
 import 'package:henry_meds/services/api.dart';
 
 class ProviderList extends StatefulWidget {
@@ -11,13 +12,24 @@ class ProviderList extends StatefulWidget {
 }
 
 class _ProviderListState extends State<ProviderList> {
-  void _onProviderPressed(String providerId) async {
+  void _onProviderPressed(Provider provider) async {
     // TODO: Show loading indicator
-    List<Availability> availabilities = await getAvailabilities(providerId);
+    List<Availability> availabilities = await getAvailabilities(provider.id);
 
     final date = await _promptForDate(availabilities);
+
     if (date != null) {
-      // TODO:
+      final availability = availabilities.firstWhere((element) =>
+          DateTime(element.date.year, element.date.month, element.date.day) ==
+          DateTime(date.year, date.month, date.day));
+
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => TimeList(
+                    provider: provider,
+                    availability: availability,
+                  )));
     }
   }
 
@@ -61,7 +73,7 @@ class _ProviderListState extends State<ProviderList> {
                   title: Text(
                     "${provider.title} ${provider.firstName} ${provider.lastName}",
                   ),
-                  onTap: () => {_onProviderPressed(provider.id)},
+                  onTap: () => {_onProviderPressed(provider)},
                 );
               },
             );
