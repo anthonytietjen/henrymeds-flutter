@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:henry_meds/components/custom_button.dart';
+import 'package:henry_meds/screens/client_portal.dart';
 import 'package:henry_meds/screens/provider_portal.dart';
 
 class Home extends StatefulWidget {
@@ -18,7 +19,8 @@ class _HomeState extends State<Home> {
   }
 
   void _onClientPortalPressed() {
-    // TOOD: Open client portal
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const ClientPortal()));
   }
 
   @override
