@@ -21,10 +21,14 @@
 - **Loading Indicators** - I added a loading indicator where the client chooses from a list of providers. Other indicators should be added when making API calls, but in the interest of time, I left `TODO` statments in those locations.
 - **Fake Data** - My fake data can be found in the `/lib/api` folder. I added delays to simulate network latency. In a real scenario the app would use either the `http` or `graphql_flutter` library to make ether REST API calls or GraphQL queries.
 - **No Login Screen** - Login wasn't part of the requirements, so I didn't worry about it for the assignment. For a real app, there would be a login screen, and session functionality.
+- **Unit Tests** - I only wrote a few unit tests for the date formatting functions. I also modified the sample widget integration test that came with the boilerplate to launch the Home screen and only check for the existence of the two buttons. Ideally there would be more comprehensive tests.
 
 ### Things to consider
 
 - **App Bundle Size** - If the same app is used by providers and clients, you would want to watch out for bundle size as the app grows. For example, if one group of users needs enhanced functionality such as PDF rendering, but the other group of users doesn't need that functionality, adding extra libraries to the project can add extra bloat for a subset of users who never use that feature.
+
+### Bonus content
+- **Icon and Logo** - As a bonus, I copied screnshots of the icon and logo from the Henry Meds website. They are not as high quality as they would be if I had the originals, but they added a nice touch to show proof-of-concept app icon and launch screen.
 
 
 ## Run app locally
