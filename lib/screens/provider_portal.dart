@@ -8,10 +8,10 @@ class ProviderPortal extends StatefulWidget {
   const ProviderPortal({super.key});
 
   @override
-  State<ProviderPortal> createState() => _HomeState();
+  State<ProviderPortal> createState() => _ProviderPortalState();
 }
 
-class _HomeState extends State<ProviderPortal> {
+class _ProviderPortalState extends State<ProviderPortal> {
   void _onAddAvailabilityPressed() async {
     final date = await _promptForDate();
     if (date != null) {
