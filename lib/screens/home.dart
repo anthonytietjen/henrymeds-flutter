@@ -57,8 +57,9 @@ class _HomeState extends State<Home> {
               ),
               const SizedBox(height: 60),
               Text(
-                'Copyright 2024 Henry Meds',
+                'Copyright © 2024 Henry Meds\nAll Rights Reserved',
                 style: Theme.of(context).textTheme.bodySmall,
+                textAlign: TextAlign.center,
               ),
             ],
           ),
