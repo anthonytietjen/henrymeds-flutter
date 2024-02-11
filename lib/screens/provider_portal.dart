@@ -12,7 +12,62 @@ class ProviderPortal extends StatefulWidget {
 }
 
 class _HomeState extends State<ProviderPortal> {
-  void _onExistingAvailabilityPressed(DateTime date) {
+  void _onAddAvailabilityPressed() async {
+    final date = await _promptForDate();
+    if (date != null) {
+      final initialTime = TimeOfDay.fromDateTime(DateTime.utc(1, 1, 1, 8, 0));
+      final time = await _promptForTime(initialTime);
+
+      if (time != null) {
+        // Confirm Selection
+        final formattedDate = formatDay(date);
+        final formattedTime = formatHourFromTimeOfDay(time);
+        var result = await showDialog(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            title: const Text('Confirm'),
+            content: Text(
+                'Confirm your selection:\n$formattedDate at $formattedTime'),
+            actions: [
+              TextButton(
+                child: const Text("Cancel"),
+                onPressed: () => Navigator.pop(context, 'Cancel'),
+              ),
+              TextButton(
+                child: const Text("Save"),
+                onPressed: () => Navigator.pop(context, 'Save'),
+              ),
+            ],
+          ),
+        );
+
+        if (result == "Save") {
+          final availabilityDateTime = DateTime(
+            date.year,
+            date.month,
+            date.day,
+            time.hour,
+            time.minute,
+          );
+
+          // TODO: Show a loading indicator while saving
+          final success = await saveNewAvailability(availabilityDateTime);
+          final message =
+              success ? "Sucessfully added" : "Error saving. Please try again";
+
+          // Show snackbar
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(message),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      }
+    }
+  }
+
+  void _onExistingAvailabilityPressed() {
     showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -70,63 +125,6 @@ class _HomeState extends State<ProviderPortal> {
     return null;
   }
 
-  void _onAddAvailabilityPressed() async {
-    final date = await _promptForDate();
-    if (date != null) {
-      final initialTime = TimeOfDay.fromDateTime(DateTime.utc(1, 1, 1, 8, 0));
-      final time = await _promptForTime(initialTime);
-
-      if (time != null) {
-        // Confirm Selection
-        final formattedDate = formatDay(date);
-        final formattedTime = formatHourFromTimeOfDay(time);
-        var result = await showDialog(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-            title: const Text('Confirm'),
-            content: Text(
-                'Confirm your selection:\n$formattedDate at $formattedTime'),
-            actions: [
-              TextButton(
-                child: const Text("Cancel"),
-                onPressed: () => Navigator.pop(context, 'Cancel'),
-              ),
-              TextButton(
-                child: const Text("Save"),
-                onPressed: () => Navigator.pop(context, 'Save'),
-              ),
-            ],
-          ),
-        );
-
-        if (result == "Save") {
-          final availabilityDateTime = DateTime(
-            date.year,
-            date.month,
-            date.day,
-            time.hour,
-            time.minute,
-          );
-
-          // TODO: Show a loading indicator while saving
-          final success = await saveNewAvailability(availabilityDateTime);
-          final message =
-              success ? "Sucessfully added" : "Error saving. Please try again";
-
-          // Show snackbar
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(message),
-              duration: Duration(seconds: 2),
-            ),
-          );
-
-          // TODO: Add it to the list if it was successfully added to the api
-        }
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,66 +132,26 @@ class _HomeState extends State<ProviderPortal> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Provider Portal'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 10, left: 14, right: 14, bottom: 0),
-              child: Text(
-                'My Availability',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-            ),
-            Expanded(
-              child: FutureBuilder<List<Availability>>(
-                future: getMyAvailabilities(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done &&
-                      snapshot.hasData) {
-                    return ListView.builder(
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        Availability availability = snapshot.data![index];
-                        return ListTile(
-                          leading: CircleAvatar(
-                            backgroundColor:
-                                Theme.of(context).colorScheme.inversePrimary,
-                            child: Text(formatTwoLetterDay(availability.date)),
-                          ),
-                          trailing: const Icon(Icons.chevron_right),
-                          title: Text(
-                            formatDay(availability.date),
-                          ),
-                          subtitle: Text(
-                            formatTimeRanges(availability.times),
-                          ),
-                          onTap: () => {
-                            _onExistingAvailabilityPressed(availability.date)
-                          },
-                        );
-                      },
-                    );
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 10, bottom: 40, left: 14, right: 14),
-              child: CustomButton(
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              const SizedBox(height: 2),
+              CustomButton(
+                key: const Key('buttonProviderPortal'),
                 onPressed: _onAddAvailabilityPressed,
-                key: const Key('buttonAddAvailability'),
-                title: 'Add Availability',
+                title: 'Add new availability',
               ),
-            ),
-          ],
+              const SizedBox(height: 10),
+              CustomButton(
+                key: const Key('buttonExistingAvailability'),
+                onPressed: _onExistingAvailabilityPressed,
+                title: 'View my existing availability',
+              ),
+            ],
+          ),
         ),
       ),
     );
