@@ -49,7 +49,7 @@ class _HomeState extends State<Home> {
                 onPressed: _onProviderPortalPressed,
                 title: 'Provider Portal',
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 16),
               CustomButton(
                 key: const Key('buttonClientPortal'),
                 onPressed: _onClientPortalPressed,

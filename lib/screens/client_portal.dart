@@ -51,7 +51,7 @@ class _ClientPortalState extends State<ClientPortal> {
                 onPressed: _onScheduleNewAppointmentPressed,
                 title: 'Schedule new appointment',
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 16),
               CustomButton(
                 key: const Key('buttonExistingAppointments'),
                 onPressed: _onExistingAppointmentsPressed,

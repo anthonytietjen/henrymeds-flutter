@@ -145,7 +145,7 @@ class _ProviderPortalState extends State<ProviderPortal> {
                 onPressed: _onAddAvailabilityPressed,
                 title: 'Add new availability',
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 16),
               CustomButton(
                 key: const Key('buttonExistingAvailability'),
                 onPressed: _onExistingAvailabilityPressed,
