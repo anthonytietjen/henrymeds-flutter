@@ -27,8 +27,104 @@ class _HomeState extends State<ProviderPortal> {
     );
   }
 
-  void _onAddAvailabilityPressed() {
-    // TODO: Show new scren
+  Future<DateTime?> _promptForDate() async {
+    final firstDate = DateTime.now();
+    final lastDate = DateTime.now().add(const Duration(days: 14));
+    final date = await showDatePicker(
+      context: context,
+      firstDate: firstDate,
+      lastDate: lastDate,
+    );
+    return date;
+  }
+
+  Future<TimeOfDay?> _promptForTime(TimeOfDay initialTime) async {
+    // TODO: Build a better widget that only presents 15 minute increments for selection
+    // TODO: when returning to this after showing message about 15 minute increment requirement, default to the minute selection
+    final time = await showTimePicker(
+      context: context,
+      initialTime: initialTime,
+    );
+
+    if (time != null) {
+      // If it is not a 15 minute increment, prompt again and show a message
+      if (time.minute % 15 != 0) {
+        _promptForTime(time);
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            title: const Text('Please select 15 minute increment'),
+            actions: [
+              TextButton(
+                child: const Text("OK"),
+                onPressed: () => Navigator.pop(context, 'OK'),
+              ),
+            ],
+          ),
+        );
+      } else {
+        return time;
+      }
+    }
+
+    return null;
+  }
+
+  void _onAddAvailabilityPressed() async {
+    final date = await _promptForDate();
+    if (date != null) {
+      final initialTime = TimeOfDay.fromDateTime(DateTime.utc(1, 1, 1, 8, 0));
+      final time = await _promptForTime(initialTime);
+
+      if (time != null) {
+        // Confirm Selection
+        final formattedDate = formatDay(date);
+        final formattedTime = formatHourFromTimeOfDay(time);
+        var result = await showDialog(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            title: const Text('Confirm'),
+            content: Text(
+                'Confirm your selection:\n$formattedDate at $formattedTime'),
+            actions: [
+              TextButton(
+                child: const Text("Cancel"),
+                onPressed: () => Navigator.pop(context, 'Cancel'),
+              ),
+              TextButton(
+                child: const Text("Save"),
+                onPressed: () => Navigator.pop(context, 'Save'),
+              ),
+            ],
+          ),
+        );
+
+        if (result == "Save") {
+          final availabilityDateTime = DateTime(
+            date.year,
+            date.month,
+            date.day,
+            time.hour,
+            time.minute,
+          );
+
+          // TODO: Show a loading indicator while saving
+          final success = await saveNewAvailability(availabilityDateTime);
+          final message =
+              success ? "Sucessfully added" : "Error saving. Please try again";
+
+          // Show snackbar
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(message),
+              duration: Duration(seconds: 2),
+            ),
+          );
+
+          // TODO: Add it to the list if it was successfully added to the api
+        }
+      }
+    }
   }
 
   @override
@@ -69,10 +165,10 @@ class _HomeState extends State<ProviderPortal> {
                           ),
                           trailing: const Icon(Icons.chevron_right),
                           title: Text(
-                            buildDaySummary(availability.date),
+                            formatDay(availability.date),
                           ),
                           subtitle: Text(
-                            buildTimeSummary(availability.times),
+                            formatTimeRanges(availability.times),
                           ),
                           onTap: () => {
                             _onExistingAvailabilityPressed(availability.date)
