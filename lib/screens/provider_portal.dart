@@ -139,7 +139,7 @@ class _ProviderPortalState extends State<ProviderPortal> {
             children: <Widget>[
               const SizedBox(height: 2),
               CustomButton(
-                key: const Key('buttonProviderPortal'),
+                key: const Key('buttonAddAvailability'),
                 onPressed: _onAddAvailabilityPressed,
                 title: 'Add new availability',
               ),
