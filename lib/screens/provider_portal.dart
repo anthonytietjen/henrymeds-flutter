@@ -51,14 +51,24 @@ class _ProviderPortalState extends State<ProviderPortal> {
 
           // TODO: Show a loading indicator while saving
           final success = await saveNewAvailability(availabilityDateTime);
-          final message =
-              success ? "Sucessfully added" : "Error saving. Please try again";
 
-          // Show snackbar
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(message),
-              duration: Duration(seconds: 2),
+          if (!success) {
+            // TODO: Handle error
+            return;
+          }
+
+          // Show message
+          await showDialog(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              title: const Text('Success'),
+              content: Text('Your availability has been added.'),
+              actions: [
+                TextButton(
+                  child: const Text("Done"),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
             ),
           );
         }
