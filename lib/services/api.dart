@@ -38,7 +38,7 @@ Future<List<Provider>> getProviders() async {
 
 Future<bool> saveNewAvailability(DateTime date) async {
   // Simiulate network latency
-  await Future.delayed(const Duration(milliseconds: 750));
+  await Future.delayed(const Duration(milliseconds: 250));
   return true;
 }
 
