@@ -13,11 +13,6 @@ void main() {
       expect(formatDay(DateTime.utc(2024, 2, 10)), 'Feb 10, 2024');
     });
 
-    test('formatTimeRanges', () {
-      expect(
-          formatTimeRanges([13.0, 13.5, 13.75]), '1:00 PM, 1:30 PM, 1:45 PM');
-    });
-
     test('formatHourFromTimeOfDay', () {
       expect(formatHourFromTimeOfDay(const TimeOfDay(hour: 13, minute: 30)),
           '1:30 PM');

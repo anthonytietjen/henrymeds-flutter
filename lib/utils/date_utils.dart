@@ -22,19 +22,6 @@ String formatTwoLetterDay(DateTime date) {
   return dayOfWeek.substring(0, 2);
 }
 
-String formatTimeRanges(List<double> timeList) {
-  // TODO: Make the summary look like this:
-  // 8:00 AM to 12:00 PM, 1:00 PM to 5:00 PM
-
-  List<String> times = [];
-
-  for (double time in timeList) {
-    times.add(formatHourFromDouble(time));
-  }
-
-  return times.join(', ');
-}
-
 DateTime combineDateWithTimeDouble(DateTime date, double time) {
   final hour = time.floor();
   final minutes = ((time - hour) * 60).round();
