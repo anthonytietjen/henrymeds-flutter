@@ -35,38 +35,6 @@ class _ProviderListState extends State<ProviderList> {
     return date;
   }
 
-  Future<TimeOfDay?> _promptForTime(TimeOfDay initialTime) async {
-    // TODO: Build a better widget that only presents 15 minute increments for selection
-    // TODO: when returning to this after showing message about 15 minute increment requirement, default to the minute selection
-    final time = await showTimePicker(
-      context: context,
-      initialTime: initialTime,
-    );
-
-    if (time != null) {
-      // If it is not a 15 minute increment, prompt again and show a message
-      if (time.minute % 15 != 0) {
-        _promptForTime(time);
-        showDialog(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-            title: const Text('Please select 15 minute increment'),
-            actions: [
-              TextButton(
-                child: const Text("OK"),
-                onPressed: () => Navigator.pop(context, 'OK'),
-              ),
-            ],
-          ),
-        );
-      } else {
-        return time;
-      }
-    }
-
-    return null;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
