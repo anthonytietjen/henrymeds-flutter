@@ -17,7 +17,7 @@
 
 ### Shortcuts taken
 
-- **Time Selector Widget** - I don't like the time selection widget. I would rather show a custom widget that makes it more user-friendly to choose 15 minute increments. But in the interest of time, I used the default time selection widget.
+- **Time Selector Widget** - I don't like the time selection widget used in the provider's add availability screen. I would rather show a custom widget that makes it more user-friendly to choose ranges in 15 minute increments. But in the interest of time, I used the default time selection widget and didn't add the ability to select a range.
 - **Loading Indicators** - I added a loading indicator where the client chooses from a list of providers. Other indicators should be added when making API calls, but in the interest of time, I left `TODO` statments in those locations.
 - **Fake Data** - My fake data can be found in the `/lib/api` folder. I added delays to simulate network latency. In a real scenario the app would use either the `http` or `graphql_flutter` library to make ether REST API calls or GraphQL queries.
 - **No Login Screen** - Login wasn't part of the requirements, so I didn't worry about it for the assignment. For a real app, there would be a login screen, and session functionality.
