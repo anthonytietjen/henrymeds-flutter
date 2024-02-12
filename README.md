@@ -12,10 +12,7 @@
 ### Assumptions Made
 
 - **15 Minute Max Appointments** - Assumption that each appointment can only take 15 minutes. This decision affected the display when looping over avaiable appointments for display purposes.
-
-### Lines Drawn in the Sand
-
-- **Time Slots** - Instead of representing time slots in the data as `DateTime` objects, I used `double` values. So the display time of `1:30 PM` is stored as `13.5` in the data. I'm not completely sold on this approach yet as it led to converting back and forth at run time for display purposes versus data storage purposes. Given more time, I would go back and consider whether there is more desired approach such as storing each time slot as a DateTime object.
+- **Time Slot Data** - Instead of representing time slots in the data as `DateTime` objects, I used `double` values. So the display time of `1:30 PM` is stored as `13.5` in the data. I'm not completely sold on this approach yet as it led to converting back and forth at run time for display purposes versus data storage purposes. Given more time, I would go back and consider whether there is more desired approach such as storing each time slot as a DateTime object.
 
 ### Shortcuts taken
 
