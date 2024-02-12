@@ -4,6 +4,7 @@
 
 - I used flutter for this project.
 - In the interest of time I only tested on iOS.
+- My source code is in the [/lib](lib) folder
 
 ## Notes
 
