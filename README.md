@@ -1,10 +1,11 @@
 # Henry Meds
 
-## Framework used
+## Overview
 
-- I used flutter for this project.
+- I used Flutter for this project.
 - In the interest of time I only tested on iOS.
 - My source code is in the [/lib](lib) folder
+- Screen redording [here](https://github.com/anthonytietjen/henrymeds-flutter/issues/1).
 
 ## Notes
 
